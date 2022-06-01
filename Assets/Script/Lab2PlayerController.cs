@@ -4,24 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // MonoBehaviour is the base class for all game objects
-public class PlayerController : MonoBehaviour
+public class Lab2PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
     public float speed;
     private Rigidbody2D marioBody;
     public float maxSpeed = 10;
-    public float upSpeed = 24;
+    public float upSpeed = 32;
     private SpriteRenderer marioSprite;
     private bool faceRightState = true;
     private bool onGroundState = true;
-    public Transform enemyLocation;
-    public Text scoreText;
-    private int score = 0;
-    private bool countScoreState = false;
-    private int scoreFinal;
-    public Text scoreFinalText;
-    public Text gameOverText;
-    public Button playAgainButton;
     private Vector2 marioOrigPos;
     private Animator marioAnimator;
     private AudioSource marioAudio;
@@ -33,9 +25,6 @@ public class PlayerController : MonoBehaviour
             marioBody = GetComponent<Rigidbody2D>();
             // Instantiate the marioSprite component 
             marioSprite = GetComponent<SpriteRenderer>();
-            scoreFinalText.gameObject.SetActive(false);
-            gameOverText.gameObject.SetActive(false);
-            playAgainButton.gameObject.SetActive(false);
             marioOrigPos = transform.position;   
             marioAnimator = GetComponent<Animator>();
             marioAudio = GetComponent<AudioSource>();
@@ -59,22 +48,12 @@ public class PlayerController : MonoBehaviour
         }
 
         if ((Input.GetKeyDown("d") || Input.GetKeyDown("a")) && onGroundState){
-            if (Mathf.Abs(marioBody.velocity.x) >  1.0) {
+            if (Mathf.Abs(marioBody.velocity.x) >=  5) {
                 marioAnimator.SetTrigger("onSkid");
                 Debug.Log("SKIDDING");
             }      
         }
 
-       //  Debug.Log("Distance Apart: " + Mathf.Abs(transform.position.x - enemyLocation.position.x));
-
-        // When jumping, gomba is near mario and we haven't registered our score
-        if (!onGroundState && countScoreState){
-            if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f) {
-                countScoreState = false;
-                score++;
-                Debug.Log(score);
-            }
-        }
     }
 
 
@@ -93,8 +72,9 @@ public class PlayerController : MonoBehaviour
         }
 
         if ((Input.GetKeyUp("a") || Input.GetKeyUp("d")) && onGroundState){
-          // stop
-          marioBody.velocity = Vector2.zero;
+            // stop
+            marioBody.velocity = Vector2.zero;
+            //marioAnimator.SetTrigger("onSkid");
         }
 
         // To make sure score does not keep updating as mario can't double jump
@@ -102,41 +82,25 @@ public class PlayerController : MonoBehaviour
           marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
           onGroundState = false;
           marioAnimator.SetBool("onGround", onGroundState);
-          // marioAnimator.SetBool("OnGround").
-          countScoreState = true; //check if Gomba is underneath
         }
     }
 
     // called when the cube hits the floor
     void OnCollisionEnter2D(Collision2D col){
-        if (col.gameObject.CompareTag("Ground")){
+        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Obstacle")){
             onGroundState = true; // back on ground
             marioAnimator.SetBool("onGround", onGroundState);
-            countScoreState = false; // reset score state
-            scoreText.text = "SCORE: " + score.ToString();
         } 
-
     }
 
     void OnTriggerEnter2D(Collider2D other){
-
         if (other.gameObject.CompareTag("Enemy")){
             Debug.Log("Collided with Gomba!");
             Time.timeScale = 0;
-            scoreFinal = score;
-            scoreFinalText.text = "FINAL SCORE: " + score.ToString();
-            scoreFinalText.gameObject.SetActive(true);
-            gameOverText.gameObject.SetActive(true);
-            playAgainButton.gameObject.SetActive(true);
-            scoreText.gameObject.SetActive(false);
-            score = 0;
-            scoreText.text = "SCORE: " + score.ToString();
-            // transform.position = marioOrigPos;
         }
     }
 
     void PlayJumpSound(){
-        Debug.Log("Mario is jumping");
 	    marioAudio.PlayOneShot(marioAudio.clip);
     }
 }
