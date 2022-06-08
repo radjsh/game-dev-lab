@@ -17,6 +17,7 @@ public class Lab2PlayerController : MonoBehaviour
     private Vector2 marioOrigPos;
     private Animator marioAnimator;
     private AudioSource marioAudio;
+    public ParticleSystem dustCloud;
 
     void Start()
     {
@@ -48,7 +49,7 @@ public class Lab2PlayerController : MonoBehaviour
         }
 
         if ((Input.GetKeyDown("d") || Input.GetKeyDown("a")) && onGroundState){
-            if (Mathf.Abs(marioBody.velocity.x) >=  5) {
+            if (Mathf.Abs(marioBody.velocity.x) >=  20) {
                 marioAnimator.SetTrigger("onSkid");
                 Debug.Log("SKIDDING");
             }      
@@ -90,6 +91,7 @@ public class Lab2PlayerController : MonoBehaviour
         if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Obstacle")){
             onGroundState = true; // back on ground
             marioAnimator.SetBool("onGround", onGroundState);
+            dustCloud.Play();
         } 
     }
 
