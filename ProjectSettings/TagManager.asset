@@ -9,6 +9,7 @@ TagManager:
   - PlayAgain
   - Obstacle
   - Breakable
+  - Consummable
   layers:
   - Default
   - TransparentFX

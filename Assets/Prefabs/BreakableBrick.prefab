@@ -49,9 +49,9 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.50689125, y: -0.4961813}
-  - {x: -0.50689125, y: -0.49618125}
-  - {x: 0.5, y: -0.4961813}
+  - {x: -0.45752668, y: -0.4961813}
+  - {x: -0.39499807, y: -0.49618125}
+  - {x: 0.46379852, y: -0.4961813}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -69,6 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debris: {fileID: 5927673998588347433, guid: 6a8df131370cb436a83a3d068bfa01c0, type: 3}
+  gameConstants: {fileID: 11400000, guid: 0799c8ed5b74e42ca933c8149e5ea4d6, type: 2}
 --- !u!1 &1391030466413687680
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +83,7 @@ GameObject:
   - component: {fileID: 1391030466413687686}
   m_Layer: 0
   m_Name: BreakableBrick
-  m_TagString: Untagged
+  m_TagString: Breakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,7 +124,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

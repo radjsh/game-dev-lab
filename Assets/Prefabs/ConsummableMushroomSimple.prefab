@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2819015008608261661}
   m_Layer: 8
   m_Name: ConsummableMushroomSimple
-  m_TagString: Untagged
+  m_TagString: Consummable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,3 +149,5 @@ MonoBehaviour:
   mushroomBody: {fileID: 3036290750656024925}
   speed: 0
   maxSpeed: 0
+  gameConstants: {fileID: 11400000, guid: 0799c8ed5b74e42ca933c8149e5ea4d6, type: 2}
+  t: {fileID: 2800000, guid: 9da5553a1c09940bcb705c51c20291ee, type: 3}

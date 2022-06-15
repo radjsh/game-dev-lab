@@ -6,6 +6,7 @@ public class BreakableBrick : MonoBehaviour
 {
     private bool broken = false;
     public GameObject debris;
+    public GameConstants gameConstants;
     
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,8 @@ public class BreakableBrick : MonoBehaviour
             Debug.Log("Collided with brick");
             broken = true;
             // assume we have 5 debris per box
-            for (int x = 0; x<5; x++){
+            Debug.Log("SPAWN NUMBER OF DEBRIS: " + gameConstants.spawnNumberOfDebris);
+            for (int x = 0; x< gameConstants.spawnNumberOfDebris; x++){
                 Instantiate(debris, transform.position, Quaternion.identity);
             }
             gameObject.transform.parent.GetComponent<SpriteRenderer>().enabled  =  false;

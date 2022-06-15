@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 // MonoBehaviour is the base class for all game objects
 public class Lab2PlayerController : MonoBehaviour
@@ -18,6 +19,11 @@ public class Lab2PlayerController : MonoBehaviour
     private Animator marioAnimator;
     private AudioSource marioAudio;
     public ParticleSystem dustCloud;
+    private AudioMixerSnapshot creepySnapshot;
+    public AudioMixer mixer;
+    public Sprite marioDeathSprite;
+    // public AudioSource itsAMeMarioAudio;
+    // public static event gameEvent onPlayerDeath;
 
     void Start()
     {
@@ -30,6 +36,8 @@ public class Lab2PlayerController : MonoBehaviour
             marioAnimator = GetComponent<Animator>();
             marioAudio = GetComponent<AudioSource>();
             marioAnimator.SetBool("onGround", onGroundState);
+            GameManager.onPlayerDeath  +=  PlayerDiesSequence;
+            
     }
 
      // Updates that have nothing to do with the Physics engine
@@ -53,6 +61,14 @@ public class Lab2PlayerController : MonoBehaviour
                 marioAnimator.SetTrigger("onSkid");
                 Debug.Log("SKIDDING");
             }      
+        }
+
+        if (Input.GetKeyDown("z")){
+            CentralManager.centralManagerInstance.consumePowerup(KeyCode.Z, this.gameObject);
+        }
+
+        if (Input.GetKeyDown("x")){
+            CentralManager.centralManagerInstance.consumePowerup(KeyCode.X, this.gameObject);
         }
 
     }
@@ -93,16 +109,36 @@ public class Lab2PlayerController : MonoBehaviour
             marioAnimator.SetBool("onGround", onGroundState);
             dustCloud.Play();
         } 
+
+        if (col.gameObject.CompareTag("Breakable")){
+            // creepySnapshot = mixer.FindSnapshot("SlowedDown");
+            // creepySnapshot.TransitionTo(.5f);
+            // Debug.Log("SLOWED DOWN SOUND PLAYED");
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other){
         if (other.gameObject.CompareTag("Enemy")){
             Debug.Log("Collided with Gomba!");
-            Time.timeScale = 0;
         }
     }
 
     void PlayJumpSound(){
 	    marioAudio.PlayOneShot(marioAudio.clip);
     }
+
+    void PlayerDiesSequence() {
+        Debug.Log("Mario dies");
+        marioAnimator.SetTrigger("marioDied");
+        marioSprite.sprite = marioDeathSprite;
+        marioBody.AddForce(Vector2.up * 12, ForceMode2D.Impulse);
+    //    this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 0.5f, 0);
+    }
+
+    // void MarioEntrance(){
+    //     marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
+    //     onGroundState = false;
+    //     marioAnimator.SetBool("onGround", onGroundState);
+    //     itsAMeMarioAudio.Play(itsAMeMarioAudio.clip);
+    // }
 }
