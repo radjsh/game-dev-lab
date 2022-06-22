@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MushroomController : MonoBehaviour, ConsumableInterface
+public class MushroomController : Singleton<MushroomController>, ConsumableInterface
 {
     public Rigidbody2D mushroomBody;
     private int moveRight = -1;
@@ -11,6 +11,7 @@ public class MushroomController : MonoBehaviour, ConsumableInterface
     private  Vector3 scaler;
     public GameConstants gameConstants;
     public Texture t;
+    public SpriteRenderer mushroomSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,14 @@ public class MushroomController : MonoBehaviour, ConsumableInterface
         velocity = new Vector2(4, 0);
         mushroomBody.AddForce(Vector2.up * 9, ForceMode2D.Impulse);
         scaler = transform.localScale  * (float) gameConstants.spawnTimeStep;
+        mushroomSprite = GetComponent<SpriteRenderer>();
     }
+
+    override public void Awake(){
+		base.Awake();
+		Debug.Log("awake called");
+		// other instructions...
+	}
 
     void MoveMushroom(){
         mushroomBody.MovePosition(mushroomBody.position + (moveRight) * velocity * Time.fixedDeltaTime);
@@ -42,12 +50,16 @@ public class MushroomController : MonoBehaviour, ConsumableInterface
             //StartCoroutine(ScaleOut());
             CentralManager.centralManagerInstance.addPowerup(t, 1, this);
             GetComponent<Collider2D>().enabled = false;
-            Destroy(gameObject);
+            mushroomBody.isKinematic = true;
+            Destroy(mushroomBody);
+            mushroomSprite.enabled = false;
+            // Destroy(gameObject); // Destroy gameObject if power has been used, disable sprite renderer and disable rigid body
 
         }
     }
 
     IEnumerator  ScaleOut(){
+        // NOT IN USE
         for (int step =  0; step  < gameConstants.breakTimeStep; step++)
         {
             this.transform.localScale = this.transform.localScale + scaler;
@@ -59,18 +71,23 @@ public class MushroomController : MonoBehaviour, ConsumableInterface
     }
 
 
-    void OnBecameInvisible() {
-        Destroy(gameObject);
-    }
+    // void OnBecameInvisible() {
+    //     Destroy(gameObject);
+    // }
 
     public void consumbedBy(GameObject player){
         // give player jump boost
+        Debug.Log("MAX SPEED BEFORE CONSUMED: " + player.GetComponent<Lab2PlayerController>().maxSpeed);
         player.GetComponent<Lab2PlayerController>().maxSpeed *= 2;
+        Debug.Log("MAX SPEED AFTER CONSUMED: " + player.GetComponent<Lab2PlayerController>().maxSpeed);
         StartCoroutine(removeEffect(player));
     }
 
     IEnumerator removeEffect(GameObject player){
         yield return new WaitForSeconds(5.0f);
+        Debug.Log("Removing effect");
         player.GetComponent<Lab2PlayerController>().maxSpeed /= 2;
+        Debug.Log("MAX SPEED AFTER 5S: " + player.GetComponent<Lab2PlayerController>().maxSpeed);
+        Destroy(gameObject);
     }
 }

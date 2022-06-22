@@ -111,7 +111,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 859440805, guid: 855dc7396df3c4e49ac4d21234eac5e1, type: 3}
+  m_Sprite: {fileID: 21300048, guid: 855dc7396df3c4e49ac4d21234eac5e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
   springJoint: {fileID: 4313290005228737413}
   consummablePrefab: {fileID: 8934310739152994671, guid: d4c758a5e88b7430cb5477586c7a9275, type: 3}
   spriteRenderer: {fileID: 4313290005228737408}
-  usedQuestionBox: {fileID: -311187362, guid: 855dc7396df3c4e49ac4d21234eac5e1, type: 3}
+  usedQuestionBox: {fileID: 21300052, guid: 855dc7396df3c4e49ac4d21234eac5e1, type: 3}
 --- !u!82 &4012061476809604418
 AudioSource:
   m_ObjectHideFlags: 0

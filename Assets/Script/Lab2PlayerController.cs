@@ -40,6 +40,19 @@ public class Lab2PlayerController : MonoBehaviour
             
     }
 
+    // private void Awake(){
+    //     //check if the _instance is not this, means it's been set before, return
+    //     if (_instance != null && _instance != this){
+    //         Destroy(this.gameObject);
+    //         return;
+    //     }
+
+    //     // otherwise, this is the first time this instance is created
+    //     _instance = this;
+    //     // add to preserve this game object open scene loading
+    //     DontDestroyOnLoad(this.gameObject); // only works on root gameObjects
+    // }
+
      // Updates that have nothing to do with the Physics engine
     void Update()
     {

@@ -5,7 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/GlowingMario.unity
+    guid: bd21c022eb4bc41e5a4806ad3c9a1c71
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: c5a1ea6362da74000adc84a8ef6387db
   m_configObjects: {}
